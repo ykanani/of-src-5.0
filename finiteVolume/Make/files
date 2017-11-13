@@ -1,0 +1,20 @@
+fvPatchFields = fields/fvPatchFields
+derivedFvPatchFields = $(fvPatchFields)/derived
+$(derivedFvPatchFields)/parabolicVelocity/parabolicVelocityFvPatchVectorField.C
+$(derivedFvPatchFields)/powerLawVelocity/powerLawVelocityFvPatchVectorField.C
+$(derivedFvPatchFields)/turbInflow/turbInflowFvPatchVectorField.C
+$(derivedFvPatchFields)/turbInflowDivFree/turbInflowDivFreeFvPatchVectorField.C
+$(derivedFvPatchFields)/turbulentInflow/turbulentInflowFvPatchFields.C
+$(derivedFvPatchFields)/turbulentInflowDivFree/turbulentInflowDivFreeFvPatchFields.C
+$(derivedFvPatchFields)/turbulentInflowProfile/turbulentInflowProfileFvPatchFields.C
+$(derivedFvPatchFields)/sem/semFvPatchFields.C
+$(derivedFvPatchFields)/modifiedSEM/modifiedSEMFvPatchFields.C
+$(derivedFvPatchFields)/convective/convectiveFvPatchFields.C
+$(derivedFvPatchFields)/turbulentInflowBLProfile/turbulentInflowBLProfileFvPatchFields.C
+$(derivedFvPatchFields)/turbulentInflowAmes/turbulentInflowAmesFvPatchFields.C
+#//$(derivedFvPatchFields)/timeVaryingMappedFixedValueRepeat/timeVaryingMappedFixedValueRepeatFvPatchFields.C
+$(derivedFvPatchFields)/turbulentInflowAmesV/turbulentInflowAmesVFvPatchFields.C
+
+interpolation/surfaceInterpolation/schemes/LUT/LUT.C
+
+LIB = $(FOAM_USER_LIBBIN)/libYKFiniteVolume

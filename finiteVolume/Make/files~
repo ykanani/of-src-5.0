@@ -1,0 +1,5 @@
+fvPatchFields = fields/fvPatchFields
+derivedFvPatchFields = $(fvPatchFields)/derived
+$(derivedFvPatchFields)/parabolicVelocity/parabolicVelocityFvPatchVectorField.C
+$(derivedFvPatchFields)/powerLawVelocity/powerLawVelocityFvPatchVectorField.C
+LIB = $(FOAM_USER_LIBBIN)/libYKFiniteVolume

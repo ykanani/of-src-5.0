@@ -1,0 +1,15 @@
+DEPENDENCIES = \
+$(derivedFvPatchFields)/parabolicVelocity/parabolicVelocityFvPatchVectorField.dep\
+$(derivedFvPatchFields)/powerLawVelocity/powerLawVelocityFvPatchVectorField.dep\
+$(derivedFvPatchFields)/turbInflow/turbInflowFvPatchVectorField.dep\
+$(derivedFvPatchFields)/turbInflowDivFree/turbInflowDivFreeFvPatchVectorField.dep\
+$(derivedFvPatchFields)/turbulentInflow/turbulentInflowFvPatchFields.dep\
+$(derivedFvPatchFields)/turbulentInflowDivFree/turbulentInflowDivFreeFvPatchFields.dep\
+$(derivedFvPatchFields)/turbulentInflowProfile/turbulentInflowProfileFvPatchFields.dep\
+$(derivedFvPatchFields)/sem/semFvPatchFields.dep\
+$(derivedFvPatchFields)/modifiedSEM/modifiedSEMFvPatchFields.dep\
+$(derivedFvPatchFields)/convective/convectiveFvPatchFields.dep\
+$(derivedFvPatchFields)/turbulentInflowBLProfile/turbulentInflowBLProfileFvPatchFields.dep\
+$(derivedFvPatchFields)/turbulentInflowAmes/turbulentInflowAmesFvPatchFields.dep\
+$(derivedFvPatchFields)/turbulentInflowAmesV/turbulentInflowAmesVFvPatchFields.dep\
+interpolation/surfaceInterpolation/schemes/LUT/LUT.dep

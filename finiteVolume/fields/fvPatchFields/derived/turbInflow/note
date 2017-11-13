@@ -1,0 +1,11 @@
+input data
+
+n		number of eddies			scalar
+sigmaMin	min length scale in all direction	vector
+sigmaMax	max length scale in all direction	vector
+
+intensityMin	min intensity in all direction		vector
+intensityMax	max intensity in all direction		vector
+
+L		eddy box length in flow direction	scalar
+

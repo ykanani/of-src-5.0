@@ -1,0 +1,1 @@
+add functionObject file to OpenFoam/etc/caseDicts/postProcessing/fields , file should have similar format to other functionObjects

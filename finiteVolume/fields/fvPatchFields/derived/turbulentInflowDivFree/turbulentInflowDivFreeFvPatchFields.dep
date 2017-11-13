@@ -1,0 +1,4 @@
+$(OBJECTS_DIR)/turbulentInflowDivFreeFvPatchFields.o: $(EXE_DEP)
+$(OBJECTS_DIR)/turbulentInflowDivFreeFvPatchFields.o:
+	@SOURCE_DIR=fields/fvPatchFields/derived/turbulentInflowDivFree
+	SOURCE=fields/fvPatchFields/derived/turbulentInflowDivFree/turbulentInflowDivFreeFvPatchFields.C ; $(Ctoo)

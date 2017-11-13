@@ -1,0 +1,211 @@
+Making dependency list for source file fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C
+SOURCE=fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C ;  mpicxx -std=c++0x -fp-trap=common -fp-model precise -Dlinux64 -DWM_DP -wd327,525,654,819,1125,1476,1505,1572 -xHost -O2 -no-prec-div  -DNoRepository -I/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude  -IlnInclude -I. -I/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/OpenFOAM/lnInclude -I/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/OSspecific/POSIX/lnInclude   -fPIC -c $SOURCE -o Make/linux64IccDPOpt/turbulentInflowFvPatchFields.o
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(384): error: variable "k" is not a template
+                                  for (int k=0 , k<patchField.size(),k++)
+                                                 ^
+          detected during:
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(384): error: expression must have a constant value
+                                  for (int k=0 , k<patchField.size(),k++)
+                                                   ^
+          detected during:
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(384): error: this operator is not allowed in a template argument expression
+                                  for (int k=0 , k<patchField.size(),k++)
+                                                             ^
+          detected during:
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(384): error: this operator is not allowed in a constant expression
+                                  for (int k=0 , k<patchField.size(),k++)
+                                                                      ^
+          detected during:
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(384): error: expected a ">"
+                                  for (int k=0 , k<patchField.size(),k++)
+                                                                        ^
+          detected during:
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(384): error: expected a ";"
+                                  for (int k=0 , k<patchField.size(),k++)
+                                                                        ^
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(384): error: expected an expression
+                                  for (int k=0 , k<patchField.size(),k++)
+                                                                        ^
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(353): error: class "Foam::Field<Foam::scalar={Foam::doubleScalar={double}}>" has no member "patch"
+                  const vectorField& c = patchField.patch().Cf();
+                                                    ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(387): error: no operator "+" matches these operands
+            operand types are: Foam::scalar + Foam::Vector<Foam::scalar>
+                                  patchField[facei] = patchField[facei] +
+                                                                        ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(401): error: no operator "+" matches these operands
+            operand types are: Foam::scalar + Foam::vector
+                          patchField[facei] = patchField[facei] + Uinf_;
+                                                                ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::scalar={Foam::doubleScalar={double}}, fvPatchFieldType=Foam::turbulentInflowFvPatchScalarField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(353): error: class "Foam::Field<Foam::vector>" has no member "patch"
+                  const vectorField& c = patchField.patch().Cf();
+                                                    ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::vector]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::vector]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::vector]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::vector]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::vector, fvPatchFieldType=Foam::turbulentInflowFvPatchVectorField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::vector, fvPatchFieldType=Foam::turbulentInflowFvPatchVectorField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(353): error: class "Foam::Field<Foam::sphericalTensor>" has no member "patch"
+                  const vectorField& c = patchField.patch().Cf();
+                                                    ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::sphericalTensor]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::sphericalTensor]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::sphericalTensor]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::sphericalTensor]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::sphericalTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSphericalTensorField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::sphericalTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSphericalTensorField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(387): error: no operator "+" matches these operands
+            operand types are: Foam::sphericalTensor + Foam::Vector<Foam::scalar>
+                                  patchField[facei] = patchField[facei] +
+                                                                        ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::sphericalTensor]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::sphericalTensor]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::sphericalTensor]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::sphericalTensor]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::sphericalTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSphericalTensorField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::sphericalTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSphericalTensorField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(401): error: no operator "+" matches these operands
+            operand types are: Foam::sphericalTensor + Foam::vector
+                          patchField[facei] = patchField[facei] + Uinf_;
+                                                                ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::sphericalTensor]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::sphericalTensor]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::sphericalTensor]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::sphericalTensor]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::sphericalTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSphericalTensorField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::sphericalTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSphericalTensorField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(353): error: class "Foam::Field<Foam::symmTensor>" has no member "patch"
+                  const vectorField& c = patchField.patch().Cf();
+                                                    ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::symmTensor]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::symmTensor]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::symmTensor]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::symmTensor]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::symmTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSymmTensorField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::symmTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSymmTensorField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(387): error: no operator "+" matches these operands
+            operand types are: Foam::symmTensor + Foam::Vector<Foam::scalar>
+                                  patchField[facei] = patchField[facei] +
+                                                                        ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::symmTensor]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::symmTensor]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::symmTensor]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::symmTensor]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::symmTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSymmTensorField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::symmTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSymmTensorField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(401): error: no operator "+" matches these operands
+            operand types are: Foam::symmTensor + Foam::vector
+                          patchField[facei] = patchField[facei] + Uinf_;
+                                                                ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::symmTensor]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::symmTensor]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::symmTensor]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::symmTensor]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::symmTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSymmTensorField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::symmTensor, fvPatchFieldType=Foam::turbulentInflowFvPatchSymmTensorField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(353): error: class "Foam::Field<Foam::tensor>" has no member "patch"
+                  const vectorField& c = patchField.patch().Cf();
+                                                    ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::tensor]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::tensor]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::tensor]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::tensor]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::tensor, fvPatchFieldType=Foam::turbulentInflowFvPatchTensorField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::tensor, fvPatchFieldType=Foam::turbulentInflowFvPatchTensorField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(387): error: no operator "+" matches these operands
+            operand types are: Foam::tensor + Foam::Vector<Foam::scalar>
+                                  patchField[facei] = patchField[facei] +
+                                                                        ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::tensor]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::tensor]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::tensor]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::tensor]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::tensor, fvPatchFieldType=Foam::turbulentInflowFvPatchTensorField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::tensor, fvPatchFieldType=Foam::turbulentInflowFvPatchTensorField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchField.C(401): error: no operator "+" matches these operands
+            operand types are: Foam::tensor + Foam::vector
+                          patchField[facei] = patchField[facei] + Uinf_;
+                                                                ^
+          detected during:
+            instantiation of "void Foam::turbulentInflowFvPatchField<Type>::updateCoeffs() [with Type=Foam::tensor]" at line 58
+            implicit generation of "Foam::turbulentInflowFvPatchField<Type>::~turbulentInflowFvPatchField() [with Type=Foam::tensor]" at line 58
+            instantiation of class "Foam::turbulentInflowFvPatchField<Type> [with Type=Foam::tensor]" at line 58
+            instantiation of "Foam::turbulentInflowFvPatchField<Type>::turbulentInflowFvPatchField(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::tensor]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::tmp<Foam::fvPatchField<Type>> Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::New(const Foam::fvPatch &, const Foam::DimensionedField<Type, Foam::volMesh> &) [with Type=Foam::tensor, fvPatchFieldType=Foam::turbulentInflowFvPatchTensorField]" at line 120 of "/home/ykanani/OpenFOAM/OpenFOAM-2.4.0/src/finiteVolume/lnInclude/fvPatchField.H"
+            instantiation of "Foam::fvPatchField<Type>::addpatchConstructorToTable<fvPatchFieldType>::addpatchConstructorToTable(const Foam::word &) [with Type=Foam::tensor, fvPatchFieldType=Foam::turbulentInflowFvPatchTensorField]" at line 37 of "fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C"
+
+compilation aborted for fields/fvPatchFields/derived/turbulentInflow/turbulentInflowFvPatchFields.C (code 2)
+make: *** [Make/linux64IccDPOpt/turbulentInflowFvPatchFields.o] Error 2
