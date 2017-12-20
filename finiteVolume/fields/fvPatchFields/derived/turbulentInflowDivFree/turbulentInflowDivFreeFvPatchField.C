@@ -350,7 +350,11 @@ void turbulentInflowDivFreeFvPatchField<Type>::updateCoeffs()
                 //Info << "rndsign = " << rndsign << endl;
 
 
-                scalar Vb((max(pp + sigma)[0]-min(pp - sigma)[0])*(bb.max()[1]-bb.min()[1])*(bb.max()[2]-bb.min()[2]));
+                //scalar Vb((max(pp + sigma)[0]-min(pp - sigma)[0])*(bb.max()[1]-bb.min()[1])*(bb.max()[2]-bb.min()[2]));
+                
+		scalar Vb((max(pp)[0]-min(pp)[0])*(bb.max()[1]-bb.min()[1])*(bb.max()[2]-bb.min()[2]));
+		//scalar Vb(L_*(bb.max()[1]-bb.min()[1])*(bb.max()[2]-bb.min()[2]));
+
                 //Info << "maximum x = " << max(pp + sigma)[0] << endl;         
                 //Info << "minimum x = " << min(pp - sigma)[0] << endl; 
                 //Info << "Vb      = " << Vb << endl;
