@@ -1,0 +1,9 @@
+finiteVolume/lnInclude/
+finiteVolume/Make/cray*
+finiteVolume/Make/linux*
+transportModels/incompressible/Make/cray*
+transportModels/incompressible/Make/linux*
+functionObjects/Make/linux*
+functionObjects/Make/cray*
+*.o
+*.dep
