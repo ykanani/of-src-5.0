@@ -505,7 +505,9 @@ void semFvPatchField<Type>::updateCoeffs()
 			//	Info << "rndsign = " << rndsign << endl;
 			//}
 
-                scalar Vb((max(pp_ + sigma_)[0]-min(pp_ - sigma_)[0])*(endPosition[1]-bb.min()[1])*(bb.max()[2]-bb.min()[2]));
+                //scalar Vb((max(pp_ + sigma_)[0]-min(pp_ - sigma_)[0])*(endPosition[1]-bb.min()[1])*(bb.max()[2]-bb.min()[2]));
+                scalar Vb((max(pp_)[0]-min(pp_)[0])*(endPosition[1]-bb.min()[1])*(bb.max()[2]-bb.min()[2]));
+
                 //Info << "maximum x = " << max(pp + sigma)[0] << endl;         
                 //Info << "minimum x = " << min(pp - sigma)[0] << endl; 
                 //Info << "Vb      = " << Vb << endl;
