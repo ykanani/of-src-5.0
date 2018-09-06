@@ -23,7 +23,7 @@ License
 
 \*---------------------------------------------------------------------------*/
 
-#include "semFvPatchField.H"
+#include "sem2FvPatchField.H"
 #include "clock.H"
 #include "vectorList.H"
 #include "fvPatchFieldMapper.H"
@@ -37,7 +37,7 @@ namespace Foam
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
 template<class Type>
-semFvPatchField<Type>::semFvPatchField
+sem2FvPatchField<Type>::sem2FvPatchField
 (
     const fvPatch& p,
     const DimensionedField<Type, volMesh>& iF
@@ -84,16 +84,19 @@ semFvPatchField<Type>::semFvPatchField
         rndsign_(100),
 	delta_(0.001),
 	fstu_(0),
-	maxy_(0.01)
+	maxy_(0.01),
+	procEddyFace(Pstream::nProcs()),
+	eddyFaceAssigned(0)
+
  
 
 {}
 
 
 template<class Type>
-semFvPatchField<Type>::semFvPatchField
+sem2FvPatchField<Type>::sem2FvPatchField
 (
-    const semFvPatchField<Type>& ptf,
+    const sem2FvPatchField<Type>& ptf,
     const fvPatch& p,
     const DimensionedField<Type, volMesh>& iF,
     const fvPatchFieldMapper& mapper
@@ -118,12 +121,14 @@ semFvPatchField<Type>::semFvPatchField
         rndsign_(ptf.rndsign_),
 	delta_(ptf.delta_),
 	fstu_(ptf.fstu_),
-	maxy_(ptf.maxy_)
+	maxy_(ptf.maxy_),
+	procEddyFace(ptf.procEddyFace),
+	eddyFaceAssigned(ptf.eddyFaceAssigned)
 {}
 
 
 template<class Type>
-semFvPatchField<Type>::semFvPatchField
+sem2FvPatchField<Type>::sem2FvPatchField
 (
     const fvPatch& p,
     const DimensionedField<Type, volMesh>& iF,
@@ -171,7 +176,9 @@ semFvPatchField<Type>::semFvPatchField
         rndsign_(vectorList(pointsDict_.lookup("rndsign"))),
 	delta_(readScalar(dict.lookup("delta"))),
 	fstu_(readScalar(dict.lookup("fstu"))),
- 	maxy_(readScalar(dict.lookup("maxy")))
+ 	maxy_(readScalar(dict.lookup("maxy"))),
+	procEddyFace(Pstream::nProcs()),
+	eddyFaceAssigned(0)
 
 {
 //	Info << "Clock.Time=" << clock().getTime() << endl;
@@ -190,9 +197,9 @@ semFvPatchField<Type>::semFvPatchField
 
 
 template<class Type>
-semFvPatchField<Type>::semFvPatchField
+sem2FvPatchField<Type>::sem2FvPatchField
 (
-    const semFvPatchField<Type>& ptf
+    const sem2FvPatchField<Type>& ptf
 )
 :
     	fixedValueFvPatchField<Type>(ptf),
@@ -214,15 +221,18 @@ semFvPatchField<Type>::semFvPatchField
         rndsign_(ptf.rndsign_),
 	delta_(ptf.delta_),
 	fstu_(ptf.fstu_),
- 	maxy_(ptf.maxy_)
+ 	maxy_(ptf.maxy_),
+	procEddyFace(ptf.procEddyFace),
+	eddyFaceAssigned(ptf.eddyFaceAssigned)
+
 
 {}
 
 
 template<class Type>
-semFvPatchField<Type>::semFvPatchField
+sem2FvPatchField<Type>::sem2FvPatchField
 (
-    const semFvPatchField<Type>& ptf,
+    const sem2FvPatchField<Type>& ptf,
     const DimensionedField<Type, volMesh>& iF
 )
 :
@@ -245,15 +255,16 @@ semFvPatchField<Type>::semFvPatchField
         rndsign_(ptf.rndsign_),
 	delta_(ptf.delta_),
 	fstu_(ptf.fstu_),
-	maxy_(ptf.maxy_)
-
+	maxy_(ptf.maxy_),
+	procEddyFace(ptf.procEddyFace),
+	eddyFaceAssigned(ptf.eddyFaceAssigned)
 {}
 
 
 // * * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * //
 
 template<class Type>
-void semFvPatchField<Type>::autoMap
+void sem2FvPatchField<Type>::autoMap
 (
     const fvPatchFieldMapper& m
 )
@@ -266,7 +277,7 @@ void semFvPatchField<Type>::autoMap
 
 
 template<class Type>
-void semFvPatchField<Type>::rmap
+void sem2FvPatchField<Type>::rmap
 (
     const fvPatchField<Type>& ptf,
     const labelList& addr
@@ -274,8 +285,8 @@ void semFvPatchField<Type>::rmap
 {
     fixedValueFvPatchField<Type>::rmap(ptf, addr);
 
-    const semFvPatchField<Type>& tiptf =
-        refCast<const semFvPatchField<Type> >(ptf);
+    const sem2FvPatchField<Type>& tiptf =
+        refCast<const sem2FvPatchField<Type> >(ptf);
 
     referenceField_.rmap(tiptf.referenceField_, addr);
     // Clear interpolator
@@ -284,7 +295,7 @@ void semFvPatchField<Type>::rmap
 
 
 template<class Type>
-void semFvPatchField<Type>::updateCoeffs()
+void sem2FvPatchField<Type>::updateCoeffs()
 {
     if (this->updated())
     {
@@ -292,7 +303,9 @@ void semFvPatchField<Type>::updateCoeffs()
     }
 	
 	Field<Type>& patchField = *this;
-	const polyMesh& pMesh = this->patch().boundaryMesh().mesh();
+	
+	//Sout << "p." << Pstream::myProcNo() <<  "VelocityField = " << patchField << endl;
+	//const polyMesh& pMesh = this->patch().boundaryMesh().mesh();
 
 	//Info << "in update coef" << endl;
 
@@ -326,13 +339,16 @@ void semFvPatchField<Type>::updateCoeffs()
        	//reading and updating eddy positions and calculating patch velocity if it needs an update
 	if (curTimeIndex_ != this->db().time().timeIndex()      )
         {
-		//symmTensor symTTest(1,2,3,4,5,6);
-		//Info << "test XX = " << symTTest.component(symmTensor::XX) << endl;
-                //Info << "test YY = " << symTTest.component(symmTensor::YY) << endl;
-                //Info << "test ZZ = " << symTTest.component(symmTensor::ZZ) << endl;
-                //Info << "test XY = " << symTTest.component(symmTensor::XY) << endl;
-                //Info << "test XZ = " << symTTest.component(symmTensor::XZ) << endl;
-                //Info << "test YZ = " << symTTest.component(symmTensor::YZ) << endl;
+			//initializing patchfield values to zero
+		patchField = patchField * 0.0;
+
+		const vectorField& c = this->patch().Cf();
+		//Sout << "p." << Pstream::myProcNo() << "face size = " << c.size() << endl;
+		//forAll ( c,facei )
+		//{
+		//	Sout << "face[" << facei << "]=" << c[facei] << endl;
+		//}
+
 		//experiments profile
 		scalarField samplePoints(List<scalar>(statisticsDict_.lookup("points")));
 		symmTensorField sampleRplus(List<symmTensor>(statisticsDict_.lookup("R")));
@@ -342,8 +358,6 @@ void semFvPatchField<Type>::updateCoeffs()
 		scalarField sampleU(sampleUplus*utau);
 		symmTensorField sampleR(sampleRplus*utau*utau);
                 scalarField sampleY(samplePoints*delta_);
-		//maxy_= 1;//already read from dictionary
-
 
 		Lund.replace(tensor::XX, sqrt(sampleR.component(symmTensor::XX)));
 		Lund.replace(tensor::YX, sampleR.component(symmTensor::XY)/(Lund.component(tensor::XX)+ROOTVSMALL));
@@ -353,27 +367,8 @@ void semFvPatchField<Type>::updateCoeffs()
 					/(Lund.component(tensor::YY)+ROOTVSMALL));
 		Lund.replace(tensor::ZZ, sqrt(sampleR.component(symmTensor::ZZ) - sqr(Lund.component(tensor::ZX))-sqr(Lund.component(tensor::ZY))));
 		
-		if(verbos)
-		{
-		
-			forAll (samplePoints, pi)
-			{
-				Info << "Points =" << samplePoints[pi]<< endl;
-				Info << "R =" << sampleR[pi] << endl;
-				Info << "U =" << sampleU[pi] << endl;
-				Info << "LUND =" << Lund[pi] << endl;
-
-			}
-		}
-		//Info << "Lund =" << Lund << endl;
 		int n_inter;
 		n_inter = sampleR.size();
-		//scalar deltastar=delta_/6.377; //look at the general slot hartnett excel file cell F52
-		
-			//defining Reynods stress tensor
-		
-		//symmTensorField R(100);
-		//R[1]=(0.1 0 0 0.1 0 0.1);
                 // getting bound box for patch
                 boundBox bb(this->patch().patch().localPoints(), true);
                 vector startPosition(bb.min()[0]-L_,bb.min()[1],bb.min()[2]);
@@ -385,95 +380,131 @@ void semFvPatchField<Type>::updateCoeffs()
 		
 		vector  tempvector(0.5,0.5,0.5);
                 vector  tempsign(1,1,1);
-                //vector  unit(1,1,1);
 		vector  tempi(fstu_,fstu_,fstu_);
 		//genrating random positions for the first time
                 bool isFirst(readBool(pointsDict_.lookup("isFirst")));
-		Info << "isFirst is " << isFirst << endl;
-                if (isFirst)
+		//List<List<List<scalar>>> procEddyFace(Pstream::nProcs());
+			
+		List<List<scalar>>& eddyFace= procEddyFace[Pstream::myProcNo()];
+ 		eddyFace.setSize(n_); 
+                //Sout << "isFirst==" << isFirst << ",proc=" << Pstream::myProcNo() << endl;
+		//Sout << "procEddyFace = " << procEddyFace << "proc=" << Pstream::myProcNo() << endl; 
+		//Info << "isFirst is " << isFirst << endl;
+		vector dx(0,0,0);  
+                scalar f(0);
+	        vector UConv(Uinf_);
+
+
+                if (isFirst )
                 {
 
-                        Info << "first time!!!" << endl;
+                        Info << "Generating Eddies and adding faces to eddies..." << endl;
                         //generating eddy positions
                         vector a(this->db().time().timeOutputValue(),1,1);      //dummy
                         forAll ( pp_,i )
                         {
                                 pp_[i] = ranGen_.position(startPosition,endPosition);
-                                
+                                //Sout << "pp[" << i << "]=" << pp_[i] << ", proc=" << Pstream::myProcNo() << endl;
 				//rndsign[i]=sign(tempsign);
                                 sigma_[i] = ranGen_.position(sigmaMin_,sigmaMax_);
-
-				//if (sigma_[i][1]>pp_[i][1])
-				//{
-				//	sigma_[i][1]=pp_[i][1];
-				//}
-				//if (sigma_[i][2]>pp_[i][1])
-				//{
-				//	sigma_[i][2]=pp_[i][1];
-				//}
-
-
 				intensity_[i] = tempi;
-				//if (pp_[i][1]<=delta_) ////
-				//{
-                                //	intensity_[i] = (intensityMax_- tempi)*(1-pp_[i][1]/delta_)+tempi;
-				//}
                                 ranGen_.randomise(tempsign);
                                 tempsign = tempsign - tempvector;
                                 rndsign_[i][0]=sign(tempsign[0]);
                                 rndsign_[i][1]=sign(tempsign[1]);
                                 rndsign_[i][2]=sign(tempsign[2]);
+				//assigning face indices to each eddy
+				
+				List<scalar>& eddyfacei = eddyFace[i];
+				eddyFaceAssigned=true;
 
+				forAll ( c,facei )
+				{
+					dx = c[facei]-pp_[i];
 
-                        }
+                                	dx[0]=dx[0]/sigma_[i][0];
+                                	dx[1]=dx[1]/sigma_[i][1];
+                                	dx[2]=dx[2]/sigma_[i][2];
+					//Info << "p=" << i << ",face=" << facei << ",dx=" << dx << endl;
+                                        if (mag(dx[1]) <= 1 &&  mag(dx[2]) <= 1 )
+                                        {
+						eddyfacei.append(facei);
+                                        }
+				}
+		        }
+		        //Gathering information from all processors
+			//Pstream::gatherList(procEddyFace);
+			//if (Pstream::master())
+			//{
+				//Info << "procEddyFace =" << procEddyFace ;
+				//pointsDict_.set("eddyFace",procEddyFace);
 
-                        pointsDict_.set("points",pp_);
-                        pointsDict_.set("sigma",sigma_);
-                        pointsDict_.set("intensity",intensity_);
-                        pointsDict_.set("rndsign",rndsign_);
-                        pointsDict_.set("time",this->db().time().timeOutputValue());
-                        pointsDict_.set("isFirst",false);
-                        pointsDict_.Foam::regIOobject::write();
-			if(verbos)
-			{
-				Info << "positions = " << pp_ << endl;
-				Info << "sigma = " << sigma_ << endl;
-				Info << "intensity = " << intensity_ << endl;
-				Info << "rndsign = " << rndsign_ << endl;
-			}
+			//}
+			pointsDict_.set("points",pp_);
+			pointsDict_.set("sigma",sigma_);
+			pointsDict_.set("intensity",intensity_);
+			pointsDict_.set("rndsign",rndsign_);
+			pointsDict_.set("time",this->db().time().timeOutputValue());
+			pointsDict_.set("isFirst",false);
+			pointsDict_.Foam::regIOobject::write();
+			
+			Info << "First Points = " << pp_[0] << endl;
                 }
 		else
                 {
+			if (!eddyFaceAssigned)
+			{
+				Info << "Assigning eddies to faces..." << endl;
+				forAll (pp_,i)	
+				{
+					List<scalar>& eddyfacei = eddyFace[i];
+					forAll ( c,facei )
+					{
+						dx = c[facei]-pp_[i];
+
+						dx[0]=dx[0]/sigma_[i][0];
+						dx[1]=dx[1]/sigma_[i][1];
+						dx[2]=dx[2]/sigma_[i][2];
+						//Info << "p=" << i << ",face=" << facei << ",dx=" << dx << endl;
+						if (mag(dx[1]) <= 1 &&  mag(dx[2]) <= 1 )
+						{
+							eddyfacei.append(facei);
+						}
+					}
+				}
+				eddyFaceAssigned=true;
+
+			}
                         Info << "Conveting Eddies..." << endl;
                         //convecting eddies with mean velocity
                         vector a(this->db().time().timeOutputValue(),1,1);   //dummy
-                        forAll ( pp_,i )
+                        int counter(0);
+			int counterConvect(0);
+			bool eddyFaceneedUpdate(0);
+			forAll ( pp_,i )
                         {
-                                pp_[i]=pp_[i]+Uinf_*this->db().time().deltaTValue();
-                                //checking if eddies convected outside of the box
-                                if ( pp_[i][0] - sigma_[i][0] > bb.min()[0] )
+			/*	//interpolation on EXP profile to calc convection velocity
+				UConv=Uinf_;
+				for (int k=1; k<n_inter; k=k+1)
+				{
+					if (pp_[i][1]<=sampleY[k])
+					{
+						UConv[0]=(sampleU[k]-sampleU[k-1])/(sampleY[k]-sampleY[k-1])*(pp_[i][1]-sampleY[k-1])+sampleU[k-1];
+						break;
+					}
+				}
+			*/
+				pp_[i]=pp_[i]+Uinf_*this->db().time().deltaTValue();
+                                 //checking if eddies convected outside of the box
+	                        if ( pp_[i][0] - sigma_[i][0] > bb.min()[0] )
                                 {
-                                        //generating new eddy
+                                	counterConvect++;
+				        //generating new eddy
                                         //Info << "generating new eddy!!!!!!!!!!!!!!!!!1" << endl;
                                         pp_[i] = ranGen_.position(startPosition,endPosition);
 					pp_[i][0]=startPosition[0];
                                         sigma_[i] = ranGen_.position(sigmaMin_,sigmaMax_);
-					//limiting normal and transverese length scales to the eddy wall distance
-					//if (sigma_[i][1]>pp_[i][1])
-					//{
-					//	sigma_[i][1]=pp_[i][1];
-					//}
-					//if (sigma_[i][2]>pp_[i][1])
-					//{
-					//	sigma_[i][2]=pp_[i][1];
-					//}
-
 					intensity_[i] = tempi;
-				//if (pp_[i][1]<=delta_) ////
-				//{
-                                //	intensity_[i] = (intensityMax_- tempi)*(1-pp_[i][1]/delta_)+tempi;
-				//}
-
                                	
 					//intensity_[i] = (intensityMax_-tempi)*(1-pp_[i][1]/0.0043)+tempi;
                               		ranGen_.randomise(tempsign);
@@ -481,24 +512,50 @@ void semFvPatchField<Type>::updateCoeffs()
                                 	rndsign_[i][0]=sign(tempsign[0]);
                                 	rndsign_[i][1]=sign(tempsign[1]);
                                 	rndsign_[i][2]=sign(tempsign[2]);
+					//assigning face indices to each eddy
+					List<scalar>& eddyfacei = eddyFace[i];
 
+					eddyfacei.clear();
+					eddyFaceneedUpdate=true;
+					forAll ( c,facei )
+					{
+						dx = c[facei]-pp_[i];
 
-		
+						dx[0]=dx[0]/sigma_[i][0];
+						dx[1]=dx[1]/sigma_[i][1];
+						dx[2]=dx[2]/sigma_[i][2];
+						//Info << "p=" << i << ",face=" << facei << ",dx=" << dx << endl;
+
+						if (mag(dx[1]) <= 1 &&  mag(dx[2]) <= 1 )
+						{
+							eddyfacei.append(facei);
+						}
+					}
+					//Sout << "ppNo=" << i << "eddfacei.size=" << eddyfacei.size() << ",proc=" << Pstream::myProcNo() << endl;
+						
                                 }
 
+		          }
+			//if (eddyFaceneedUpdate)
+			//{
+			//	Pstream::gatherList(procEddyFace);
+			//	//Pstream::scatterList(procEddyFace);
+			//	if (Pstream::master())
+			//	{
+			//	//Info << "procEddyFace =" << procEddyFace ;
+			//	//pointsDict_.set("eddyFace",procEddyFace);
+			//	}
+			//}
 
-                        }
-
-
-
-                        pointsDict_.set("points",pp_);
-                        pointsDict_.set("sigma",sigma_);
-                        pointsDict_.set("intensity",intensity_);
-                        pointsDict_.set("rndsign",rndsign_);
-
-                        pointsDict_.set("time",this->db().time().timeOutputValue());
+			pointsDict_.set("points",pp_);
+			pointsDict_.set("sigma",sigma_);
+			pointsDict_.set("intensity",intensity_);
+			pointsDict_.set("rndsign",rndsign_);
+			pointsDict_.set("time",this->db().time().timeOutputValue());
+			//pointsDict_.Foam::regIOobject::write();
+		
                         Info << "First Points = " << pp_[0] << endl;
-                }
+                } // end of else
 
 
                         //if(verbos)
@@ -519,10 +576,7 @@ void semFvPatchField<Type>::updateCoeffs()
 
                 //calculating patch velocity based on eddies current poistion
                 //vectorField& patchField = *this;
-                const vectorField& c = this->patch().Cf();
-                vector dx(0,0,0);
-                scalar f(0);
-		Type test;
+                Type test;
 		vector unit(1,1,1);
 		vector unitx(1,0,0);
 		Type unitType(pTraits<Type>::one);
@@ -530,21 +584,24 @@ void semFvPatchField<Type>::updateCoeffs()
 
 	        scalar UCoeff(1);
 		tensor LundCoeff(pTraits<tensor>::zero);
-                forAll ( c,facei )
+		//Info << "starting eddy loop " << endl;
+                forAll ( pp_,i )
                 {
-                        patchField[facei] = pTraits<Type>::zero;//vector(0,0,0);
-                        forAll(pp_,i)
+                        //patchField[facei] = pTraits<Type>::zero;//vector(0,0,0);
+			//Info << "Eddy No. " << i << endl;
+			
+                        for(int jj=0; jj<eddyFace[i].size();jj=jj+1)
                         {
+				int facei = eddyFace[i][jj];
                                 dx = c[facei]-pp_[i];
                                 dx[0]=dx[0]/sigma_[i][0];
                                 dx[1]=dx[1]/sigma_[i][1];
                                 dx[2]=dx[2]/sigma_[i][2];
-
-
+				//Sout <<  "proc," << Pstream::myProcNo() << ",ppNo,"<< i << ",pp," << pp_[i] << ",facei," << facei << ",c," << c[facei] << ",dx," << dx << endl;
                                 f=1;
                                 for(int j=0; j<3; j=j+1)
                                 {
-                                        if (mag(dx[j]) >= 1 )
+                                        if (mag(dx[j]) >= 1 ) // no need for this, but just in case!
                                         {
                                                 f = 0;
                                         }
@@ -557,11 +614,6 @@ void semFvPatchField<Type>::updateCoeffs()
                                                 //fout = fout * 2*exp(-9*x(i)^2/2);
                                         }
                                 }
-				if (f>0)
-				{
-					Sout <<  "proc," << Pstream::myProcNo() << ",ppNo,"<< i << ",pp," << pp_[i] << ",facei," << facei << ",c," << c[facei] << ",dx," << dx << endl;
-				}
-
 				
 				patchField[facei] = patchField[facei] +
                                                                         (
@@ -572,6 +624,10 @@ void semFvPatchField<Type>::updateCoeffs()
                                                                         );
 
                         }
+		}
+		Info << " Constructing mean field " << endl;	
+		forAll(c,facei)
+		{
                         //interpolation on EXP profile
  			UCoeff=Uinf_[0];
 			LundCoeff=pTraits<tensor>::zero;
@@ -581,7 +637,7 @@ void semFvPatchField<Type>::updateCoeffs()
 				{
 					UCoeff=(sampleU[k]-sampleU[k-1])/(sampleY[k]-sampleY[k-1])*(c[facei][1]-sampleY[k-1])+sampleU[k-1];
 					LundCoeff=(Lund[k]-Lund[k-1])/(sampleY[k]-sampleY[k-1])*(c[facei][1]-sampleY[k-1])+Lund[k-1];
-		break;
+					break;
 				}
 			}	
 
@@ -594,10 +650,10 @@ void semFvPatchField<Type>::updateCoeffs()
                         //Info << "LundCoef  =  " << LundCoeff << endl;
 			
                 }
-		Sout << "p=" << Pstream::myProcNo() << ", velocity = " << patchField << endl;
-
-		Info << "Done!" << endl;
+		//Sout << "p=" << Pstream::myProcNo() << ", velocity = " << patchField << endl;
                 curTimeIndex_ = this->db().time().timeIndex();
+		Info << "Done!" << endl;
+
         }
         /*
         else
@@ -636,7 +692,7 @@ fixedValueFvPatchField<Type>::updateCoeffs();
 
 
 template<class Type>
-void semFvPatchField<Type>::write(Ostream& os) const
+void sem2FvPatchField<Type>::write(Ostream& os) const
 {
     fvPatchField<Type>::write(os);
     os.writeKeyword("n") << n_ << token::END_STATEMENT << nl;
