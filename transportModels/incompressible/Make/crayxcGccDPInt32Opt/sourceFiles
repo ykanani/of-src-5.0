@@ -1,0 +1,6 @@
+SOURCE = \
+viscosityModels/viscosityModel/viscosityModel.C \
+viscosityModels/viscosityModel/viscosityModelNew.C \
+viscosityModels/water/water.C \
+transportModel/transportModel.C \
+singlePhaseThermalTransportModel/singlePhaseThermalTransportModel.C 

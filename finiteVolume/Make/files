@@ -9,6 +9,7 @@ $(derivedFvPatchFields)/turbulentInflowDivFree/turbulentInflowDivFreeFvPatchFiel
 $(derivedFvPatchFields)/turbulentInflowDivFreeLimited/turbulentInflowDivFreeLimitedFvPatchFields.C
 $(derivedFvPatchFields)/turbulentInflowProfile/turbulentInflowProfileFvPatchFields.C
 $(derivedFvPatchFields)/sem/semFvPatchFields.C
+$(derivedFvPatchFields)/sem2/sem2FvPatchFields.C
 $(derivedFvPatchFields)/modifiedSEM/modifiedSEMFvPatchFields.C
 $(derivedFvPatchFields)/convective/convectiveFvPatchFields.C
 $(derivedFvPatchFields)/turbulentInflowBLProfile/turbulentInflowBLProfileFvPatchFields.C
