@@ -1,0 +1,18 @@
+OBJECTS = \
+$(OBJECTS_DIR)/extendedCellToCellExtStencil.o\
+$(OBJECTS_DIR)/extendedCentredCellToCellExtStencil.o\
+$(OBJECTS_DIR)/cellToCellExtStencil.o\
+$(OBJECTS_DIR)/CPCCellToCellExtStencil.o\
+$(OBJECTS_DIR)/centredCPCCellToCellExtStencilObject.o\
+$(OBJECTS_DIR)/weightedArithmeticMeanFilter.o\
+$(OBJECTS_DIR)/volWeightedArithmeticMeanFilter.o\
+$(OBJECTS_DIR)/medianFilter.o\
+$(OBJECTS_DIR)/maximumFilter.o\
+$(OBJECTS_DIR)/minimumFilter.o\
+$(OBJECTS_DIR)/weightedGaussianFilter.o\
+$(OBJECTS_DIR)/volWeightedGaussianFilter.o\
+$(OBJECTS_DIR)/differentialFilter.o\
+$(OBJECTS_DIR)/anisotropicDifferentialFilter.o\
+$(OBJECTS_DIR)/parabolicFilter.o\
+$(OBJECTS_DIR)/lagrangianFilter.o\
+$(OBJECTS_DIR)/simpleGridFilter.o

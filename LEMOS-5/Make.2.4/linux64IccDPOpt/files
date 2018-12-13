@@ -1,0 +1,29 @@
+# 1 "files"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "files"
+
+extendedStencil = finiteVolume/fvMesh/extendedStencil
+cellToCellExt = $(extendedStencil)/cellToCellExt
+$(cellToCellExt)/extendedCellToCellExtStencil.C
+$(cellToCellExt)/extendedCentredCellToCellExtStencil.C
+$(cellToCellExt)/globalIndexStencils/cellToCellExtStencil.C
+$(cellToCellExt)/globalIndexStencils/CPCCellToCellExtStencil.C
+$(cellToCellExt)/MeshObjects/centredCPCCellToCellExtStencilObject.C
+
+
+turbulenceModels/LES/LESfilters/weightedArithmeticMeanFilter/weightedArithmeticMeanFilter.C
+turbulenceModels/LES/LESfilters/volWeightedArithmeticMeanFilter/volWeightedArithmeticMeanFilter.C
+turbulenceModels/LES/LESfilters/medianFilter/medianFilter.C
+turbulenceModels/LES/LESfilters/maximumFilter/maximumFilter.C
+turbulenceModels/LES/LESfilters/minimumFilter/minimumFilter.C
+turbulenceModels/LES/LESfilters/weightedGaussianFilter/weightedGaussianFilter.C
+turbulenceModels/LES/LESfilters/volWeightedGaussianFilter/volWeightedGaussianFilter.C
+turbulenceModels/LES/LESfilters/differentialFilter/differentialFilter.C
+turbulenceModels/LES/LESfilters/anisotropicDifferentialFilter/anisotropicDifferentialFilter.C
+turbulenceModels/LES/LESfilters/parabolicFilter/parabolicFilter.C
+turbulenceModels/LES/LESfilters/lagrangianFilter/lagrangianFilter.C
+turbulenceModels/LES/LESfilters/simpleGridFilter/simpleGridFilter.C
+
+
+LIB = $(FOAM_USER_LIBBIN)/libLEMOS-2.4.x

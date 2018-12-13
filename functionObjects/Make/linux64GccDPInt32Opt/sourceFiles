@@ -1,3 +1,0 @@
-SOURCE = \
-wallGradUMean/wallGradUMean.C \
-wallGradU/wallGradU.C 

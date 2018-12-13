@@ -1,0 +1,18 @@
+LOCAL_OBJECTS = \
+extendedCellToCellExtStencil.o\
+extendedCentredCellToCellExtStencil.o\
+cellToCellExtStencil.o\
+CPCCellToCellExtStencil.o\
+centredCPCCellToCellExtStencilObject.o\
+weightedArithmeticMeanFilter.o\
+volWeightedArithmeticMeanFilter.o\
+medianFilter.o\
+maximumFilter.o\
+minimumFilter.o\
+weightedGaussianFilter.o\
+volWeightedGaussianFilter.o\
+differentialFilter.o\
+anisotropicDifferentialFilter.o\
+parabolicFilter.o\
+lagrangianFilter.o\
+simpleGridFilter.o

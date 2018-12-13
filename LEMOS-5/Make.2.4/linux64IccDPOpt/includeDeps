@@ -1,0 +1,17 @@
+include $(cellToCellExt)/extendedCellToCellExtStencil.dep
+include $(cellToCellExt)/extendedCentredCellToCellExtStencil.dep
+include $(cellToCellExt)/globalIndexStencils/cellToCellExtStencil.dep
+include $(cellToCellExt)/globalIndexStencils/CPCCellToCellExtStencil.dep
+include $(cellToCellExt)/MeshObjects/centredCPCCellToCellExtStencilObject.dep
+include turbulenceModels/LES/LESfilters/weightedArithmeticMeanFilter/weightedArithmeticMeanFilter.dep
+include turbulenceModels/LES/LESfilters/volWeightedArithmeticMeanFilter/volWeightedArithmeticMeanFilter.dep
+include turbulenceModels/LES/LESfilters/medianFilter/medianFilter.dep
+include turbulenceModels/LES/LESfilters/maximumFilter/maximumFilter.dep
+include turbulenceModels/LES/LESfilters/minimumFilter/minimumFilter.dep
+include turbulenceModels/LES/LESfilters/weightedGaussianFilter/weightedGaussianFilter.dep
+include turbulenceModels/LES/LESfilters/volWeightedGaussianFilter/volWeightedGaussianFilter.dep
+include turbulenceModels/LES/LESfilters/differentialFilter/differentialFilter.dep
+include turbulenceModels/LES/LESfilters/anisotropicDifferentialFilter/anisotropicDifferentialFilter.dep
+include turbulenceModels/LES/LESfilters/parabolicFilter/parabolicFilter.dep
+include turbulenceModels/LES/LESfilters/lagrangianFilter/lagrangianFilter.dep
+include turbulenceModels/LES/LESfilters/simpleGridFilter/simpleGridFilter.dep

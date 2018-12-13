@@ -1,0 +1,6 @@
+extendedStencil = finiteVolume/fvMesh/extendedStencil
+cellToCellExt = $(extendedStencil)/cellToCellExt
+ODESolvers = ODE/ODESolvers
+translationODE = ODE/translationODE
+sixDOF = ODE/sixDOF
+LIB = $(FOAM_USER_LIBBIN)/libLEMOS-2.4.x

@@ -1,3 +1,0 @@
-fvPatchFields = fields/fvPatchFields
-derivedFvPatchFields = $(fvPatchFields)/derived
-LIB = $(FOAM_USER_LIBBIN)/libYK41FiniteVolume

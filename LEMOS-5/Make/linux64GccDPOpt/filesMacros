@@ -1,0 +1,2 @@
+extendedStencil = finiteVolume/fvMesh/extendedStencil
+cellToCellExt = $(extendedStencil)/cellToCellExt

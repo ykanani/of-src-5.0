@@ -1,0 +1,1 @@
+../LES/LESfilters/weightedArithmeticMeanFilter/weightedArithmeticMeanFilter.H

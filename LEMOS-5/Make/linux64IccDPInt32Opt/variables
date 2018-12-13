@@ -1,0 +1,3 @@
+extendedStencil = finiteVolume/fvMesh/extendedStencil
+cellToCellExt = $(extendedStencil)/cellToCellExt
+LIB = $(FOAM_USER_LIBBIN)/libLEMOS-5
