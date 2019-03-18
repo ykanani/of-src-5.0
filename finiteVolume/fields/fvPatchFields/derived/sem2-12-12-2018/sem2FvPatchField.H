@@ -22,7 +22,7 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::turbulentInflowDivFreeLimitedFvPatchField
+    Foam::sem2FvPatchField
 
 Group
     grpInletBoundaryConditions
@@ -59,7 +59,7 @@ Description
     \verbatim
     myPatch
     {
-        type            turbulentInflowDivFree;
+        type            sem2;
         fluctuationScale 0.1;
         referenceField  uniform 10;
         alpha           0.1;
@@ -70,14 +70,15 @@ SeeAlso
     Foam::fixedValueFvPatchField
 
 SourceFiles
-    turbulentInflowDivFreeLimitedFvPatchField.C
+    sem2FvPatchField.C
 
 \*---------------------------------------------------------------------------*/
 
-#ifndef turbulentInflowDivFreeLimitedFvPatchField_H
-#define turbulentInflowDivFreeLimitedFvPatchField_H
+#ifndef sem2FvPatchField_H
+#define sem2FvPatchField_H
 #include "fvPatchFields.H"
 #include "Random.H"
+#include "pointToPointPlanarInterpolation.H"
 #include "fixedValueFvPatchFields.H"
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -85,16 +86,24 @@ namespace Foam
 {
 
 /*---------------------------------------------------------------------------*\
-                 Class turbulentInflowDivFreeLimitedFvPatchField Declaration
+                 Class sem2FvPatchField Declaration
 \*---------------------------------------------------------------------------*/
 
 template<class Type>
-class turbulentInflowDivFreeLimitedFvPatchField
+class sem2FvPatchField
 :
     public fixedValueFvPatchField<Type>
 {
     // Private data
+	//- 2D interpolation (for 'planarInterpolation' mapMethod)
+	autoPtr<pointToPointPlanarInterpolation> mapperPtr_;
+	
 	//- Points dictionary
+	IOdictionary  pointsDict_;
+
+	//- Input velocity and Reynolds stress tensor
+	IOdictionary  statisticsDict_;
+
         //- Random number generator
         Random ranGen_;
 
@@ -107,15 +116,12 @@ class turbulentInflowDivFreeLimitedFvPatchField
 	//- Max length scale
 	vector	sigmaMax_;
 
-	//- Min intensity
-	vector	intensityMin_;
-
-	//- Max intensity
-	vector	intensityMax_;
 
         //- Mean velocity
         vector	Uinf_;
-
+	
+	//- friction coefficient Cf
+	scalar	cf_;
 	//- Eddy box length in flow direction
 	scalar	L_;
 	
@@ -125,44 +131,53 @@ class turbulentInflowDivFreeLimitedFvPatchField
         //- Current time index (used for updating)
         label curTimeIndex_;
 
+        vectorField pp_;
+        vectorField sigma_;
+        vectorField intensity_;
+        vectorField rndsign_;
+	scalar delta_;
+	scalar fstu_;		//freestream turbulence
+	scalar maxy_;
+	List<List<List<scalar>>> procEddyFace;
+	bool eddyFaceAssigned;
 
 public:
 
     //- Runtime type information
-    TypeName("turbulentInflowDivFreeLimited");
+    TypeName("sem2");
 
 
     // Constructors
 
         //- Construct from patch and internal field
-        turbulentInflowDivFreeLimitedFvPatchField
+        sem2FvPatchField
         (
             const fvPatch&,
             const DimensionedField<Type, volMesh>&
         );
 
         //- Construct from patch, internal field and dictionary
-        turbulentInflowDivFreeLimitedFvPatchField
+        sem2FvPatchField
         (
             const fvPatch&,
             const DimensionedField<Type, volMesh>&,
             const dictionary&
         );
 
-        //- Construct by mapping given turbulentInflowDivFreeLimitedFvPatchField
+        //- Construct by mapping given sem2FvPatchField
         //  onto a new patch
-        turbulentInflowDivFreeLimitedFvPatchField
+        sem2FvPatchField
         (
-            const turbulentInflowDivFreeLimitedFvPatchField<Type>&,
+            const sem2FvPatchField<Type>&,
             const fvPatch&,
             const DimensionedField<Type, volMesh>&,
             const fvPatchFieldMapper&
         );
 
         //- Construct as copy
-        turbulentInflowDivFreeLimitedFvPatchField
+        sem2FvPatchField
         (
-            const turbulentInflowDivFreeLimitedFvPatchField<Type>&
+            const sem2FvPatchField<Type>&
         );
 
         //- Construct and return a clone
@@ -170,14 +185,14 @@ public:
         {
             return tmp<fvPatchField<Type> >
             (
-                new turbulentInflowDivFreeLimitedFvPatchField<Type>(*this)
+                new sem2FvPatchField<Type>(*this)
             );
         }
 
         //- Construct as copy setting internal field reference
-        turbulentInflowDivFreeLimitedFvPatchField
+        sem2FvPatchField
         (
-            const turbulentInflowDivFreeLimitedFvPatchField<Type>&,
+            const sem2FvPatchField<Type>&,
             const DimensionedField<Type, volMesh>&
         );
 
@@ -189,7 +204,7 @@ public:
         {
             return tmp<fvPatchField<Type> >
             (
-                new turbulentInflowDivFreeLimitedFvPatchField<Type>(*this, iF)
+                new sem2FvPatchField<Type>(*this, iF)
             );
         }
 
@@ -249,26 +264,49 @@ public:
 		{
 			return (D >= 0)? 1: -1;	
 		}
-	    scalar simplify(vector I, scalar s)
-		{
-			return I.x();
-		}
-	    vector simplify(vector I, vector v)
-		{
-			return I;
-		}
-	    sphericalTensor simplify(vector I, sphericalTensor v)
-		{
-			return v;
-		}
-	    symmTensor  simplify(vector I, symmTensor v)
-		{
-			return v;
-		}
-	    tensor	simplify(vector I, tensor v)
-		{
-			return v;
-		}
+            scalar simplify(vector I, scalar s)
+                {
+                        return I.x();
+                }
+            vector simplify(vector I, vector v)
+                {
+                        return I;
+                }
+            sphericalTensor simplify(vector I, sphericalTensor v)
+                {
+                        return v;
+                }
+            symmTensor  simplify(vector I, symmTensor v)
+                {
+                        return v;
+                }
+            tensor      simplify(vector I, tensor v)
+                {
+                        return v;
+                }
+     	    scalar dotp(tensor I, scalar s)
+                {
+                        return s;
+                }
+            vector dotp(tensor I, vector v)
+                {
+                        return I&v;
+                }
+            sphericalTensor dotp(tensor I, sphericalTensor v)
+                {
+                        return v;
+                }
+            symmTensor  dotp(tensor I, symmTensor v)
+                {
+                        return v;
+                }
+            tensor      dotp(tensor I, tensor v)
+                {
+                        return v;
+                }
+
+
+
         //- Write
         virtual void write(Ostream&) const;
 };
@@ -281,7 +319,7 @@ public:
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 #ifdef NoRepository
-#   include "turbulentInflowDivFreeLimitedFvPatchField.C"
+#   include "sem2FvPatchField.C"
 #endif
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //

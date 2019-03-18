@@ -371,10 +371,8 @@ void sem2FvPatchField<Type>::updateCoeffs()
 		n_inter = sampleR.size();
                 // getting bound box for patch
                 boundBox bb(this->patch().patch().localPoints(), true);
-                //vector startPosition(bb.min()[0]-L_,bb.min()[1],bb.min()[2]);
-                //vector endPosition(bb.min()[0],min(maxy_,bb.max()[1]),bb.max()[2]);
-                vector startPosition(bb.min()[0]-sigmaMax_[0],bb.min()[1],bb.min()[2]);
-                vector endPosition(bb.min()[0]+sigmaMax_[0],bb.max()[1],bb.max()[2]);
+                vector startPosition(bb.min()[0]-L_,bb.min()[1],bb.min()[2]);
+                vector endPosition(bb.min()[0],min(maxy_,bb.max()[1]),bb.max()[2]);
 
                 Info << "start = " << startPosition << endl;
                 Info << "end = " << endPosition << endl;
@@ -570,10 +568,8 @@ void sem2FvPatchField<Type>::updateCoeffs()
 			//	Info << "rndsign = " << rndsign << endl;
 			//}
 
-                //scalar Vb((max(pp_ + sigma_)[0]-min(pp_ - sigma_)[0])*(endPosition[1]-bb.min()[1])*(bb.max()[2]-bb.min()[2]));
-                scalar Vb( (endPosition[0]-startPosition[0])*(endPosition[1]-startPosition[1])*(endPosition[2]-startPosition[2]) );
-
-		//Info << "maximum x = " << max(pp + sigma)[0] << endl;         
+                scalar Vb((max(pp_ + sigma_)[0]-min(pp_ - sigma_)[0])*(endPosition[1]-bb.min()[1])*(bb.max()[2]-bb.min()[2]));
+                //Info << "maximum x = " << max(pp + sigma)[0] << endl;         
                 //Info << "minimum x = " << min(pp - sigma)[0] << endl; 
                 //Info << "Vb      = " << Vb << endl;
                 tensor a(1,0,0,0,1,0,0,0,1);
@@ -581,16 +577,11 @@ void sem2FvPatchField<Type>::updateCoeffs()
                 //calculating patch velocity based on eddies current poistion
                 //vectorField& patchField = *this;
                 Type test;
-                vector Lcy(0,bb.max()[1]-bb.min()[1],0); //cyclic length in y
-                vector Lcz(0,0,bb.max()[2]-bb.min()[2]); //cyclic length in z
-
 		vector unit(1,1,1);
 		vector unitx(1,0,0);
 		Type unitType(pTraits<Type>::one);
 	        vector m(0,0,0);
-		vector ppPlusSigma(0,0,0);
-                vector ppMinusSigma(0,0,0);
-                vector Dbb(0,0,0); // Distance from bounding box
+
 	        scalar UCoeff(1);
 		tensor LundCoeff(pTraits<tensor>::zero);
 		//Info << "starting eddy loop " << endl;
@@ -616,7 +607,11 @@ void sem2FvPatchField<Type>::updateCoeffs()
                                         }
                                         else
                                         {
+                                                //fout = fout * cos(pi/2*x(i))^2;
+                                                //f = f * sqrt(scalar(5))*exp(-5*mag(dx[j]));  //1
                                                 f = f * sqrt(scalar(1.5))*(1-mag(dx[j]));      //T21
+                                                //f = f * sqrt(scalar(3.0)/sqrt(scalar(3.141592)))*exp(-9/2*sqr(dx[j])); //T22
+                                                //fout = fout * 2*exp(-9*x(i)^2/2);
                                         }
                                 }
 				
@@ -628,72 +623,6 @@ void sem2FvPatchField<Type>::updateCoeffs()
                                                                         * sqrt(Vb) / sqrt(n_)
                                                                         );
 
-
- 				//Ensuring cyclic behaviour
-                                ppPlusSigma= pp_[i]+sigma_[i];
-                                ppMinusSigma= pp_[i]-sigma_[i];
-                                //check in z direction
-                                if (ppPlusSigma[2] > bb.max()[2]) //outside bb from right
-                                {
-                                        dx = c[facei]-(pp_[i]-Lcz);
-                                        dx[0]=dx[0]/sigma_[i][0];
-                                        dx[1]=dx[1]/sigma_[i][1];
-                                        dx[2]=dx[2]/sigma_[i][2];
-
-
-                                        f=1;
-                                        for(int j=0; j<3; j=j+1)
-                                        {
-                                                if (mag(dx[j]) >= 1 )
-                                                {
-                                                        f = 0;
-                                                }
-                                                else
-                                                {
-                                                        f = f * sqrt(scalar(1.5))*(1-mag(dx[j]));      //T21
-                                                }
-                                        }
-					patchField[facei] = patchField[facei] +
-                                                                        (
-                                                                        simplify(rndsign_[i], pTraits<Type>::one)
-                                                                        /sqrt(sigma_[i][0]*sigma_[i][1]*sigma_[i][2])
-                                                                        * f
-                                                                        * sqrt(Vb) / sqrt(n_)
-                                                                        );
-
-
-                                } //end if outside bb from right
-                                else if (ppMinusSigma[2] < bb.min()[2]) //outside bb from left
-                                {
-                                        dx = c[facei]-(pp_[i]+Lcz);
-                                        dx[0]=dx[0]/sigma_[i][0];
-                                        dx[1]=dx[1]/sigma_[i][1];
-                                        dx[2]=dx[2]/sigma_[i][2];
-
-
-                                        f=1;
-                                        for(int j=0; j<3; j=j+1)
-                                        {
-                                                if (mag(dx[j]) >= 1 )
-                                                {
-                                                        f = 0;
-                                                }
-                                                else
-                                                {
-                                                        f = f * sqrt(scalar(1.5))*(1-mag(dx[j]));      //T21
-                                                }
-                                        }
-					patchField[facei] = patchField[facei] +
-                                                                        (
-                                                                        simplify(rndsign_[i], pTraits<Type>::one)
-                                                                        /sqrt(sigma_[i][0]*sigma_[i][1]*sigma_[i][2])
-                                                                        * f
-                                                                        * sqrt(Vb) / sqrt(n_)
-                                                                        );
-
-                                }
-
-                                 
                         }
 		}
 		Info << " Constructing mean field " << endl;	

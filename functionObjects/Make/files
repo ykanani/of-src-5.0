@@ -1,4 +1,4 @@
 wallGradUMean/wallGradUMean.C
 wallGradU/wallGradU.C
-
+filter/filter.C
 LIB = $(FOAM_USER_LIBBIN)/libYKfieldFunctionObjects

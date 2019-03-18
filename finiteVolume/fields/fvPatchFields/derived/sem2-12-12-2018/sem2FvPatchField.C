@@ -371,10 +371,8 @@ void sem2FvPatchField<Type>::updateCoeffs()
 		n_inter = sampleR.size();
                 // getting bound box for patch
                 boundBox bb(this->patch().patch().localPoints(), true);
-                //vector startPosition(bb.min()[0]-L_,bb.min()[1],bb.min()[2]);
-                //vector endPosition(bb.min()[0],min(maxy_,bb.max()[1]),bb.max()[2]);
-                vector startPosition(bb.min()[0]-sigmaMax_[0],bb.min()[1],bb.min()[2]);
-                vector endPosition(bb.min()[0]+sigmaMax_[0],bb.max()[1],bb.max()[2]);
+                vector startPosition(bb.min()[0]-L_,bb.min()[1],bb.min()[2]);
+                vector endPosition(bb.min()[0],min(maxy_,bb.max()[1]),bb.max()[2]);
 
                 Info << "start = " << startPosition << endl;
                 Info << "end = " << endPosition << endl;
@@ -570,10 +568,8 @@ void sem2FvPatchField<Type>::updateCoeffs()
 			//	Info << "rndsign = " << rndsign << endl;
 			//}
 
-                //scalar Vb((max(pp_ + sigma_)[0]-min(pp_ - sigma_)[0])*(endPosition[1]-bb.min()[1])*(bb.max()[2]-bb.min()[2]));
-                scalar Vb( (endPosition[0]-startPosition[0])*(endPosition[1]-startPosition[1])*(endPosition[2]-startPosition[2]) );
-
-		//Info << "maximum x = " << max(pp + sigma)[0] << endl;         
+                scalar Vb((max(pp_ + sigma_)[0]-min(pp_ - sigma_)[0])*(endPosition[1]-bb.min()[1])*(bb.max()[2]-bb.min()[2]));
+                //Info << "maximum x = " << max(pp + sigma)[0] << endl;         
                 //Info << "minimum x = " << min(pp - sigma)[0] << endl; 
                 //Info << "Vb      = " << Vb << endl;
                 tensor a(1,0,0,0,1,0,0,0,1);
