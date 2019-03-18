@@ -129,7 +129,7 @@ class turbulentInflowDivFreeLimitedFvPatchField
 public:
 
     //- Runtime type information
-    TypeName("turbulentInflowDivFree");
+    TypeName("turbulentInflowDivFreeLimited");
 
 
     // Constructors
