@@ -28,6 +28,7 @@ turbulenceModels/LES/LESfilters/volWeightedArithmeticMeanFilter/volWeightedArith
 turbulenceModels/LES/LESfilters/medianFilter/medianFilter.C
 turbulenceModels/LES/LESfilters/maximumFilter/maximumFilter.C
 turbulenceModels/LES/LESfilters/minimumFilter/minimumFilter.C
+turbulenceModels/LES/LESfilters/stdFilter/stdFilter.C
 turbulenceModels/LES/LESfilters/weightedGaussianFilter/weightedGaussianFilter.C
 turbulenceModels/LES/LESfilters/volWeightedGaussianFilter/volWeightedGaussianFilter.C
 turbulenceModels/LES/LESfilters/differentialFilter/differentialFilter.C
